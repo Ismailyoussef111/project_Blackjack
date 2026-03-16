@@ -37,7 +37,7 @@ fenetre.title("Ma fenetre")
 fenetre.geometry("1920x1080")
 fenetre.configure(bg="#1a3a1a")
 
-def cliquer():
+def cliquer(): 
     regle = tk.Toplevel(fenetre)  # ← Toplevel au lieu de Tk() pour une 2eme fenetre
     regle.title("regle")
     regle.geometry("1920x1080")
