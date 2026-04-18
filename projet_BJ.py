@@ -40,7 +40,7 @@ fenetre.geometry("1920x1080")
 fenetre.configure(bg="#1a3a1a")
 
 def regle_jeux():
-    regle = tk.Toplevel(fenetre)  # ← Toplevel au lieu de Tk() pour une 2eme fenetre
+    regle = tk.Toplevel(fenetre)  
     regle.title("regle")
     regle.geometry("1920x1080")
     regle.configure(bg="#1a3a1a")
@@ -49,7 +49,7 @@ def regle_jeux():
     font=("Rockwell", 24), 
     fg="white", 
     bg="#1a3a1a", 
-    wraplength=1400,  # ← réduit pour avoir des marges
+    wraplength=1400,  
     justify="left",
     padx=50)  
     label_regle.place(relx=0.5, rely=0.1, anchor="n")
@@ -69,6 +69,7 @@ def score_():
 
 
 def solo():
+    jeux_fini=False
     fensolo = tk.Toplevel(fenetre)
     fensolo.title("Blackjack - Solo")
     fensolo.geometry("1920x1080")
@@ -80,26 +81,22 @@ def solo():
     
 
     def val_main(c):
-        la_valeur=0
-        for carte in c:  
-            la_valeur += valeur_carte(carte)
-        return la_valeur
-    #a modifier fait bugeer solo
-"""
-    def valeur_carte(carte):
-        if "Roi" in carte or "Valet" in carte or "Reine" in carte or "10" in carte:  
-            return 10
-        if "As" in carte:
-            if val_main(c)>10:
-                return 1
+        valeur = 0
+        as_count = 0
+        for carte in c:
+            if "As" in carte:
+                as_count += 1
+                valeur += 11        
             else:
-                return 11                    
-        for n in range(2, 10):
-            if str(n) in carte:
-                return n
-        return 0
-        """
-    
+                valeur += valeur_carte(carte)
+        # si on dépasse 21, on repasse chaque As de 11 à 1 (-10)
+        while valeur > 21 and as_count > 0:
+            valeur -= 10
+            as_count -= 1
+        return valeur
+
+
+        
     
     def afficher_joueur():
         label_txtj = tk.Label(fensolo, text="Ton score", font=("Rockwell", 33, "bold"), fg="white", bg="#1a3a1a")
@@ -118,7 +115,14 @@ def solo():
         label_crou2 = tk.Label(fensolo, text=str(val_main(croupier)), font=("Rockwell", 23, "bold"), fg="white", bg="#1a3a1a")
         label_crou2.place(relx=0.5, rely=0.3, anchor="center")
         btn_tirage.config(state="disabled")
-        btn_reste.config(state="disabled")
+        btn_reste.config(state="disabled") 
+        btn_rejouer.config(state="normal")
+        
+        
+    rejouer=lambda: (fensolo.destroy(), solo())
+        
+    
+
         
 
 
@@ -143,6 +147,12 @@ def solo():
             label_21 = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
             label_21.place(relx=0.2, rely=0.3, anchor="center")
             fin_croupier()
+        
+        elif val_main(croupier)>21:
+            label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label.place(relx=0.2, rely=0.3, anchor="center")
+            fin_croupier()
+        
             
         elif val_main(joueur)>val_main(croupier):
             label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
@@ -153,21 +163,26 @@ def solo():
             label_vict_croup = tk.Label(fensolo, text="Perdu hahaha!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
             label_vict_croup.place(relx=0.3, rely=0.3, anchor="center")
             fin_croupier()
-            
-        
-    
-        
+        jeux_fini= True
         
             
-    
+            
+            
+   
     btn_tirage = tk.Button(fensolo, text="TAKE", width=9, height=2, font=("Rockwell", 9), command=tirernv_carte,bg="#52be8c",relief=tk.GROOVE)
     btn_tirage.place(relx=0.9, rely=0.9, anchor="center")
     btn_reste = tk.Button(fensolo, text="STAY", width=9, height=2, font=("Rockwell", 9), command=rester,bg="#52be8c",relief=tk.GROOVE)
     btn_reste.place(relx=0.2, rely=0.9, anchor="center")
+    btn_rejouer = tk.Button(fensolo, text="Rejouer", width=9, height=2, font=("Rockwell", 9), command=rejouer,bg="#52be8c",relief=tk.GROOVE)
+    btn_rejouer.place(relx=0.5, rely=0.9, anchor="center")
+    btn_rejouer.config(state="disabled") 
+    btn_quitter= tk.Button(fensolo, text="GIVE UP", width=9, height=2, font=("Rockwell", 9), command=fenetre.destroy,bg="#52be8c",relief=tk.GROOVE)
+    btn_quitter.place(relx=0.02, rely=0.017, anchor="center")
     
-    
-    
-    
+
+        
+        
+
     
 def jeux():
     feujeux=tk.Toplevel(fenetre)  
@@ -195,61 +210,4 @@ btn3.place(relx=0.5, rely=0.6, anchor="center",)
 
 
 fenetre.mainloop()
-"""
-
-def jeux():#1a3a1a
-    jeux_fini = False
-    deck_de_jeux = deck()
-    croupier = [deck_de_jeux.pop(), deck_de_jeux.pop()]
-    joueur = [deck_de_jeux.pop(), deck_de_jeux.pop()]
-    
-    score_croupier = 0  #
-    score_joueur = 0  
-    
-    for carte in croupier:  
-        score_croupier += valeur_carte(carte)
-    for carte in joueur:    
-        score_joueur += valeur_carte(carte)
-    
-    print("Ton score de départ :", score_joueur)
-    
-    while jeux_fini == False:
-        take = input("Voulez vous tirer une nouvelle carte ? oui ou non : ")
-        
-        if take == "oui":
-            nouveau = deck_de_jeux.pop()
-            joueur.append(nouveau)
-            score_joueur += valeur_carte(nouveau)
-            if score_joueur > 21:
-                print("t bete", score_joueur)
-                jeux_fini = True  
-            elif score_joueur < 21:
-                print(score_joueur,"tu reveux des cartes ?")
-            else:
-                print("t chaud", score_joueur)
-                jeux_fini = True              
-        else :
-            jeux_fini = True  
-            print("score croupier:", score_croupier, "/ score joueur:", score_joueur)
-            if score_croupier > score_joueur:
-                print("perdu, t nul")
-            else:
-                print("gagné!")
-                
-                
-
-                
-                
-                
-class Blackjack:
-    def __init__(self,fenetre):
-        self.fenetre=fenetre
-        self.
-    
-               
-         
-if __name__ == "__main__":
-    app = Blackjack()
-    app.mainloop()
-    """
     
