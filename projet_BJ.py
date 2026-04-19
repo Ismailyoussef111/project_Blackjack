@@ -9,7 +9,6 @@ import numpy as np
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk 
-import tkinter as tk
 from random import shuffle
 def deck():
     groupe = [" coeur", " pick", " trefle", " carreau"]
@@ -31,8 +30,6 @@ def valeur_carte(carte):
             if str(n) in carte:
                 return n
         return 0
-
-import tkinter as tk
 
 fenetre = tk.Tk()
 fenetre.title("Ma fenetre")
