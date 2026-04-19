@@ -127,7 +127,7 @@ def solo():
         joueur.append(deck_de_jeux.pop())
         afficher_joueur()
         if val_main(joueur)>21:
-            label_depassement = tk.Label(fensolo, text="Perdu hahaha!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label_depassement = tk.Label(fensolo, text="Perdu hahaha!", font=("Rockwell", 58, "bold"), fg="#e74c3c", bg="#1a3a1a")
             label_depassement.place(relx=0.2, rely=0.3, anchor="center")
             fin_croupier()
 
@@ -141,23 +141,23 @@ def solo():
         afficher_joueur()
         
         if val_main(joueur)==21:
-            label_21 = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label_21 = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="#2ecc71", bg="#1a3a1a")
             label_21.place(relx=0.2, rely=0.3, anchor="center")
             fin_croupier()
         
         elif val_main(croupier)>21:
-            label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="#2ecc71", bg="#1a3a1a")
             label.place(relx=0.2, rely=0.3, anchor="center")
             fin_croupier()
         
             
         elif val_main(joueur)>val_main(croupier):
-            label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label = tk.Label(fensolo, text="Gagné trop fort!", font=("Rockwell", 58, "bold"), fg="#2ecc71", bg="#1a3a1a")
             label.place(relx=0.2, rely=0.3, anchor="center")
             fin_croupier()
             
         elif val_main(joueur)<val_main(croupier):
-            label_vict_croup = tk.Label(fensolo, text="Perdu hahaha!", font=("Rockwell", 58, "bold"), fg="white", bg="#1a3a1a")
+            label_vict_croup = tk.Label(fensolo, text="Perdu hahaha!", font=("Rockwell", 58, "bold"), fg="#e74c3c", bg="#1a3a1a")
             label_vict_croup.place(relx=0.3, rely=0.3, anchor="center")
             fin_croupier()
         jeux_fini= True
