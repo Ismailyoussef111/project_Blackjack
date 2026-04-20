@@ -32,22 +32,7 @@ fenetre.title("Ma fenetre")
 fenetre.geometry("1920x1080")
 fenetre.configure(bg="#1a3a1a")
 
-def regle_jeux():
-    regle = tk.Toplevel(fenetre)  
-    regle.title("regle")
-    regle.geometry("1920x1080")
-    regle.configure(bg="#1a3a1a")
-    label_regle = tk.Label(regle, 
-    text="Le but du Blackjack est avoir une main la plus proche de 21 sans la depasser et de battre le croupier. Les cartes 2 a 10 valent leur valeur nominale. Les figures (Valet Dame Roi) valent 10. As vaut 1 ou 11 selon ce qui te convient. Au debut le joueur et le croupier recoivent chacun 2 cartes. Le croupier a une carte cachee. Le joueur peut soit tirer une carte de plus (Hit) soit rester avec ses cartes (Stand). Ensuite le croupier revele sa carte cachee et tire des cartes jusqu a atteindre au moins 17. Si le joueur depasse 21 il perd directement. Si le joueur est plus proche de 21 que le croupier il gagne. En cas d egalite la mise est remboursee. Si le joueur a un Blackjack (As + carte a 10) des le depart il gagne 1.5 fois sa mise.",
-    font=("Rockwell", 24), 
-    fg="white", 
-    bg="#1a3a1a", 
-    wraplength=1400,  
-    justify="left",
-    padx=50)  
-    label_regle.place(relx=0.5, rely=0.1, anchor="n")
-    btn_retour = tk.Button(regle, text="MENU", width=15, height=2, font=("Rockwell", 9), command=regle.destroy,bg="#52be8c",relief=tk.GROOVE)
-    btn_retour.place(relx=0.9, rely=0.9, anchor="center")
+
 
 
 def score_():
