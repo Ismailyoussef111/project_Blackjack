@@ -6,7 +6,7 @@ Gestion du déroulement d’une partie (joueur / croupier)
 Calcul des scores
 Gestion des conditions de victoire, défaite et égalité
 Organisation globale du fonctionnement du jeu
-à faire:  mode multijoueur implementation d un score.
+à faire:  mode multijoueur implementation d'un score.
 
 Youcef (Deck et cartes)
 Création du paquet de cartes
