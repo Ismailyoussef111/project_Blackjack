@@ -25,6 +25,7 @@ def score_():
     label_score.place(relx=0.5, rely=0.1, anchor="n")
     btn_menu = tk.Button(score, text="MENU", width=2, height=9, font=("Rockwell", 9), command=score.destroy,bg="#52be8c",relief=tk.GROOVE)
     btn_menu.place(relx=0.9, rely=0.9, anchor="center")
+    
 
 
 def solo():
