@@ -1,0 +1,26 @@
+Nassim et Youssef
+
+(Back-end & logique du jeu)
+Implémentation des règles du Blackjack
+Gestion du déroulement d’une partie (joueur / croupier)
+Calcul des scores
+Gestion des conditions de victoire, défaite et égalité
+Organisation globale du fonctionnement du jeu
+à faire:  mode multijoueur implementation d un score.
+
+Youcef (Deck et cartes)
+Création du paquet de cartes
+Attribution des valeurs aux cartes
+Mélange du deck
+Distribution des cartes au joueur et au croupier
+Gestion du tirage des cartes pendant la partie
+creation systeme d argent
+
+Ayadi (Paramètres, règles et interface graphique)
+Définition des paramètres du jeu
+Mise en place des règles côté interface
+Création de l’interface graphique avec Tkinter
+Développement du menu et des boutons (tirer, rester…)
+Affichage des scores et des informations du jeu
+a faire
+amelioration graphiquer avec creation de carte piece piste audio
