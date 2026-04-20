@@ -1,7 +1,7 @@
 import numpy as np
 import tkinter as tk
 from tkinter import filedialog
-from PIL import Image, ImageTk 
+from PIL import Image, ImageTk
 import tkinter as tk
 from random import shuffle
 
