@@ -55,3 +55,6 @@ argent_joueur = 1000  # par defaut j'ai mis 1000 euros
         argent_joueur -= mise_actuelle.get() # On RETIRE la mise si on perds
     # Si égalité, on ne fait rien
 
+
+#question pr celui qui as tout lu quand on a plus d'argent on peut plus jouait prcq faut parier avant on fait comment??????????????????????????????
+
