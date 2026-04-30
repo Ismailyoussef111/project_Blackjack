@@ -1,29 +1,8 @@
 from random import shuffle
 import tkinter as tk
+import deck as dk
  
  
-def deck():
-    groupe = [" coeur", " pick", " trefle", " carreau"]
-    deck_carte = []
-    special = ["As", "Valet", "Roi", "Reine"]
-    for nom in groupe:
-        for majeur in special:
-            deck_carte.append(majeur + nom)
-        for valeur in range(2, 11):
-            deck_carte.append(str(valeur) + nom)
-    shuffle(deck_carte)
-    return deck_carte
- 
- 
-def valeur_carte(carte):
-    if "Roi" in carte or "Valet" in carte or "Reine" in carte or "10" in carte:
-        return 10
-    if "As" in carte:
-        return 1
-    for n in range(2, 10):
-        if str(n) in carte:
-            return n
-    return 0
  
  
 def solo(fenetre):
@@ -32,7 +11,7 @@ def solo(fenetre):
     fensolo.geometry("1920x1080")
     fensolo.configure(bg="#142e14")
  
-    deck_de_jeux = deck()
+    deck_de_jeux = dk.deck()
     croupier = [deck_de_jeux.pop(), deck_de_jeux.pop()]
     joueur = [deck_de_jeux.pop(), deck_de_jeux.pop()]
  
@@ -44,7 +23,7 @@ def solo(fenetre):
                 as_count += 1
                 valeur += 11
             else:
-                valeur += valeur_carte(carte)
+                valeur += dk.valeur_carte(carte)
         while valeur > 21 and as_count > 0:
             valeur -= 10
             as_count -= 1
@@ -57,7 +36,7 @@ def solo(fenetre):
         label_jou.place(relx=0.5, rely=0.6, anchor="center")
         label_txtc = tk.Label(fensolo, text="Le score du croupier", font=("Rockwell", 33, "bold"), fg="white", bg="#1a3a1a")
         label_txtc.place(relx=0.5, rely=0.2, anchor="center")
-        label_crou = tk.Label(fensolo, text=str(valeur_carte(croupier[0])) + " ?", font=("Rockwell", 23, "bold"), fg="white", bg="#1a3a1a")
+        label_crou = tk.Label(fensolo, text=str(dk.valeur_carte(croupier[0])) + " ?", font=("Rockwell", 23, "bold"), fg="white", bg="#1a3a1a")
         label_crou.place(relx=0.5, rely=0.3, anchor="center")
  
     def fin_croupier():
