@@ -97,5 +97,17 @@ def solo(fenetre):
  
     btn_quitter = tk.Button(fensolo, text="GIVE UP", width=9, height=2, font=("Rockwell", 9), command=fensolo.destroy, bg="#52be8c", relief=tk.GROOVE)
     btn_quitter.place(relx=0.02, rely=0.017, anchor="center")
+    
+    
+    import parier as pa
+
+
+
+
+    pa.init_pari(fensolo, btn_tirage, btn_reste, val_main, joueur, croupier)
+
+
+    btn_tirage.config(state="disabled")
+    btn_reste.config(state="disabled")
  
     afficher_joueur()
