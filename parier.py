@@ -80,5 +80,5 @@ def initiation_pari(fensolo, btn_tirage, btn_reste, val_main, joueur, croupier):
             argent_joueur -= mise_actuelle.get()
         label_argent.config(text=f"{argent_joueur} €")
 
-    return calculer_resultat
+    return calculer_resultat 
 
