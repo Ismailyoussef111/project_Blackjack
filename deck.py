@@ -7,7 +7,7 @@ def deck():
     for nom in groupe:
         for majeur in special:
             deck_carte.append(majeur + nom)
-        for valeur in range(2, 11):
+        for valeur in range(2, 11) :
             deck_carte.append(str(valeur) + nom)
     shuffle(deck_carte)
     return deck_carte
