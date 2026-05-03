@@ -15,7 +15,7 @@ fenetre.geometry("1920x1080")
 fenetre.configure(bg="#1a3a1a")
  
  
-def score_():
+def score_() :
     score = tk.Toplevel(fenetre)
     score.title("score")
     score.geometry("1920x1080")
