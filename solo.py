@@ -2,7 +2,6 @@
 import tkinter as tk
 import deck as dk
 
-# ── Palette ───────────────────────────────────────────────────────
 BG       = "#0d1f0d"
 CARD_BG  = "#163516"
 ACCENT   = "#f0c040"
@@ -12,7 +11,7 @@ WHITE    = "#f0ede6"
 GRAY     = "#7f8c8d"
 FONT     = "Georgia"
 
-# W, H calculés dynamiquement dans solo()
+
 
 
 def solo(fenetre):
@@ -21,7 +20,6 @@ def solo(fenetre):
     fensolo.configure(bg=BG)
     fensolo.resizable(False, False)
 
-    # ── Adaptation à l'écran ──────────────────────────────────────
     fensolo.update_idletasks()
     SW = fensolo.winfo_screenwidth()
     SH = fensolo.winfo_screenheight()
@@ -37,7 +35,7 @@ def solo(fenetre):
     croupier = [deck_de_jeux.pop(), deck_de_jeux.pop()]
     joueur   = [deck_de_jeux.pop(), deck_de_jeux.pop()]
 
-    # ── Calcul valeur main ────────────────────────────────────────
+    
     def val_main(c):
         valeur, as_count = 0, 0
         for carte in c:
@@ -51,16 +49,16 @@ def solo(fenetre):
             as_count -= 1
         return valeur
 
-    # ── Canvas principal (tapis) ──────────────────────────────────
+   
     canvas = tk.Canvas(fensolo, width=W, height=H-160,
                        bg="#154a15", highlightthickness=0)
     canvas.place(x=0, y=0)
 
-    # Ellipse décorative tapis
+    
     canvas.create_oval(60, 20, W-60, H-180, fill="#165a16",
                        outline="#1e6e1e", width=3)
 
-    # ── Labels score ─────────────────────────────────────────────
+   
     lbl_score_croupier = tk.Label(fensolo,
         text="CROUPIER", font=(FONT, 13, "bold"),
         fg=ACCENT, bg="#154a15")
@@ -81,13 +79,13 @@ def solo(fenetre):
         fg=WHITE, bg="#154a15")
     lbl_val_joueur.place(x=W//2, y=H-242, anchor="center")
 
-    # ── Message résultat ─────────────────────────────────────────
+    
     lbl_resultat = tk.Label(fensolo, text="",
         font=(FONT, 36, "bold"), fg=ACCENT, bg="#154a15",
         relief=tk.FLAT)
     lbl_resultat.place(x=W//2, y=H//2-20, anchor="center")
 
-    # ── Rendu cartes ─────────────────────────────────────────────
+    
     CW, CH = 72, 100   # taille carte
 
     def afficher_main(cartes, y_base, cacher_deuxieme=False):
@@ -112,7 +110,7 @@ def solo(fenetre):
     def afficher_resultat(msg, couleur=ACCENT):
         lbl_resultat.config(text=msg, fg=couleur)
 
-    # ── Fin de partie ─────────────────────────────────────────────
+    
     def fin_croupier():
         rafraichir(croupier_cache=False)
         btn_tirage.config(state="disabled")
@@ -121,7 +119,7 @@ def solo(fenetre):
         if calculer_resultat:
             calculer_resultat()
 
-    # ── Actions joueur ────────────────────────────────────────────
+    
     def tirernv_carte():
         joueur.append(deck_de_jeux.pop())
         rafraichir()
@@ -144,7 +142,7 @@ def solo(fenetre):
 
     rejouer = lambda: (fensolo.destroy(), solo(fenetre))
 
-    # ── Barre de boutons ──────────────────────────────────────────
+    
     bar = tk.Frame(fensolo, bg=BG, height=80)
     bar.place(x=0, y=H-140, width=W, height=80)
 
@@ -173,7 +171,7 @@ def solo(fenetre):
     btn_rejouer.pack(side=tk.RIGHT, padx=20, pady=16)
     btn_rejouer.config(state="disabled")
 
-    # ── Zone pari (bas) ───────────────────────────────────────────
+   
     import parier as pa
     calculer_resultat = pa.initiation_pari(
         fensolo, btn_tirage, btn_reste, val_main, joueur, croupier)
@@ -182,6 +180,7 @@ def solo(fenetre):
     btn_reste.config(state="disabled")
 
     rafraichir()
+
 
 
  
