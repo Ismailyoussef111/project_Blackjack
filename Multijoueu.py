@@ -35,11 +35,10 @@ def multi(fenetre):
     fenmulti.configure(bg=BG)
     fenmulti.resizable(False, False)
 
-    # ── Détection taille écran disponible ────────────────────────
     fenmulti.update_idletasks()
     SW = fenmulti.winfo_screenwidth()
     SH = fenmulti.winfo_screenheight()
-    # On prend 95% de l'écran max, mais pas plus que 1280×800
+
     W = min(1280, int(SW * 0.95))
     H = min(800,  int(SH * 0.95))
     fenmulti.geometry(f"{W}x{H}+0+0")
@@ -57,18 +56,14 @@ def multi(fenetre):
     noms      = ["Joueur 1", "Joueur 2"]
     couleurs  = [GREEN, BLUE]
 
-    # ── Layout dynamique basé sur H ───────────────────────────────
     BAR_H   = 70
     PAD_H   = 50
     TAPIS_H = H - BAR_H - PAD_H
 
-    # Zones verticales dans le canvas :
-    # Croupier  : 10% à 30% de TAPIS_H
-    # Milieu    : 30% à 55%  (résultat, panel mise)
-    # Joueurs   : 55% à 90%
-    YCL = int(TAPIS_H * 0.04)   # label "CROUPIER"
-    YCS = int(TAPIS_H * 0.08)   # score croupier
-    YCC = int(TAPIS_H * 0.13)   # cartes croupier
+
+    YCL = int(TAPIS_H * 0.04)   
+    YCS = int(TAPIS_H * 0.08)   
+    YCC = int(TAPIS_H * 0.13)   
 
     YJL = int(TAPIS_H * 0.56)   # label "JOUEUR 1/2"
     YJS = int(TAPIS_H * 0.61)   # score joueurs
@@ -76,7 +71,6 @@ def multi(fenetre):
     YJN = int(TAPIS_H * 0.87)   # nom joueur sous cartes
     YTO = int(TAPIS_H * 0.92)   # indicateur tour
 
-    # ── Canvas tapis ──────────────────────────────────────────────
     canvas = tk.Canvas(fenmulti, width=W, height=TAPIS_H,
                        bg="#154a15", highlightthickness=0)
     canvas.place(x=0, y=0)
@@ -116,7 +110,6 @@ lbl_val_croupier = tk.Label(fenmulti, text="?",
                          font=(FONT, 11, "bold"), fg=ACCENT, bg="#154a15")
     lbl_tour.place(x=W//2, y=YTO, anchor="center")
 
-    # Taille carte proportionnelle à la fenêtre
     CW = max(50, int(W * 0.048))
     CH = int(CW * 1.39)
 
@@ -252,7 +245,6 @@ lbl_val_croupier = tk.Label(fenmulti, text="?",
               activebackground="#d4a820", relief=tk.FLAT, cursor="hand2",
               padx=10, pady=4).grid(row=11, column=0, columnspan=4, pady=(3, 10))
 
-    # ── Logique de jeu ────────────────────────────────────────────
     def set_tour(msg, couleur=ACCENT):
         lbl_tour.config(text=msg, fg=couleur)
 
