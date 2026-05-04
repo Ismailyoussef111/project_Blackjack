@@ -1,66 +1,45 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 30 10:55:34 2026
-
-@author: youss
-"""
-
-from random import shuffle
 import tkinter as tk
 import deck as dk
 
+# ── Palette ───────────────────────────────────────────────────────
+BG       = "#0d1f0d"
+CARD_BG  = "#163516"
+ACCENT   = "#f0c040"
+GREEN    = "#2ecc71"
+RED      = "#e74c3c"
+WHITE    = "#f0ede6"
+GRAY     = "#7f8c8d"
+FONT     = "Georgia"
 
-BG_MAIN  = "#142e14"
-BG_FRAME = "#1a3a1a"
-VERT     = "#52be8c"
-BLANC    = "white"
-GRIS     = "#aaaaaa"
-FONT     = "Rockwell"
-
-
-def cadre(parent, relx, rely, width, height, anchor="center"):
-    f = tk.Frame(parent, bg=BG_FRAME, bd=2, relief=tk.GROOVE,
-                 highlightbackground=VERT, highlightthickness=1)
-    f.place(relx=relx, rely=rely, anchor=anchor,
-            relwidth=width, relheight=height)
-    return f
+# W, H calculés dynamiquement dans solo()
 
 
 def solo(fenetre):
     fensolo = tk.Toplevel(fenetre)
-    fensolo.title("Blackjack - Solo")
-    fensolo.geometry("1920x1080")
-    fensolo.configure(bg=BG_MAIN)
+    fensolo.title("Blackjack – Solo")
+    fensolo.configure(bg=BG)
+    fensolo.resizable(False, False)
+
+    # ── Adaptation à l'écran ──────────────────────────────────────
+    fensolo.update_idletasks()
+    SW = fensolo.winfo_screenwidth()
+    SH = fensolo.winfo_screenheight()
+    W  = min(1280, int(SW * 0.95))
+    H  = min(800,  int(SH * 0.95))
+    fensolo.geometry(f"{W}x{H}+0+0")
+
+    # Taille carte proportionnelle
+    CW = max(54, int(W * 0.056))
+    CH = int(CW * 1.39)
 
     deck_de_jeux = dk.deck()
     croupier = [deck_de_jeux.pop(), deck_de_jeux.pop()]
     joueur   = [deck_de_jeux.pop(), deck_de_jeux.pop()]
 
-   
-    cadre_croupier = cadre(fensolo, relx=0.5, rely=0.10, width=0.44, height=0.18)
-    cadre_joueur   = cadre(fensolo, relx=0.5, rely=0.38, width=0.44, height=0.26)
-
-    tk.Label(cadre_croupier, text="Croupier", font=(FONT, 15),
-             fg=GRIS, bg=BG_FRAME).place(relx=0.5, rely=0.15, anchor="center")
-    tk.Label(cadre_joueur, text="Ton score", font=(FONT, 15),
-             fg=GRIS, bg=BG_FRAME).place(relx=0.5, rely=0.10, anchor="center")
-
-    label_score_croupier = tk.Label(cadre_croupier, text="",
-                                    font=(FONT, 42, "bold"), fg=BLANC, bg=BG_FRAME)
-    label_score_croupier.place(relx=0.5, rely=0.65, anchor="center")
-
-    label_score_joueur = tk.Label(cadre_joueur, text="",
-                                  font=(FONT, 42, "bold"), fg=BLANC, bg=BG_FRAME)
-    label_score_joueur.place(relx=0.5, rely=0.42, anchor="center")
-
-    label_resultat = tk.Label(cadre_joueur, text="",
-                              font=(FONT, 22, "bold"), fg=VERT, bg=BG_FRAME)
-    label_resultat.place(relx=0.5, rely=0.82, anchor="center")
-
-
+    # ── Calcul valeur main ────────────────────────────────────────
     def val_main(c):
-        valeur = 0
-        as_count = 0
+        valeur, as_count = 0, 0
         for carte in c:
             if "As" in carte:
                 as_count += 1
@@ -72,71 +51,137 @@ def solo(fenetre):
             as_count -= 1
         return valeur
 
-    def afficher_joueur():
-        label_score_joueur.config(text=str(val_main(joueur)))
-        label_score_croupier.config(
-            text=str(dk.valeur_carte(croupier[0])) + " ?"
-        )
+    # ── Canvas principal (tapis) ──────────────────────────────────
+    canvas = tk.Canvas(fensolo, width=W, height=H-160,
+                       bg="#154a15", highlightthickness=0)
+    canvas.place(x=0, y=0)
 
+    # Ellipse décorative tapis
+    canvas.create_oval(60, 20, W-60, H-180, fill="#165a16",
+                       outline="#1e6e1e", width=3)
+
+    # ── Labels score ─────────────────────────────────────────────
+    lbl_score_croupier = tk.Label(fensolo,
+        text="CROUPIER", font=(FONT, 13, "bold"),
+        fg=ACCENT, bg="#154a15")
+    lbl_score_croupier.place(x=W//2, y=22, anchor="center")
+
+    lbl_val_croupier = tk.Label(fensolo,
+        text="?", font=(FONT, 28, "bold"),
+        fg=WHITE, bg="#154a15")
+    lbl_val_croupier.place(x=W//2, y=50, anchor="center")
+
+    lbl_score_joueur = tk.Label(fensolo,
+        text="VOUS", font=(FONT, 13, "bold"),
+        fg=ACCENT, bg="#154a15")
+    lbl_score_joueur.place(x=W//2, y=H-270, anchor="center")
+
+    lbl_val_joueur = tk.Label(fensolo,
+        text="", font=(FONT, 28, "bold"),
+        fg=WHITE, bg="#154a15")
+    lbl_val_joueur.place(x=W//2, y=H-242, anchor="center")
+
+    # ── Message résultat ─────────────────────────────────────────
+    lbl_resultat = tk.Label(fensolo, text="",
+        font=(FONT, 36, "bold"), fg=ACCENT, bg="#154a15",
+        relief=tk.FLAT)
+    lbl_resultat.place(x=W//2, y=H//2-20, anchor="center")
+
+    # ── Rendu cartes ─────────────────────────────────────────────
+    CW, CH = 72, 100   # taille carte
+
+    def afficher_main(cartes, y_base, cacher_deuxieme=False):
+        n = len(cartes)
+        espacement = min(CW + 18, (W - 200) // max(n, 1))
+        x_start = W//2 - (n * espacement) // 2
+        for i, carte in enumerate(cartes):
+            x = x_start + i * espacement
+            cachee = cacher_deuxieme and i == 1
+            dk.dessiner_carte(canvas, x, y_base, carte, cachee=cachee, w=CW, h=CH)
+
+    def rafraichir(croupier_cache=True):
+        canvas.delete("cartes")
+        afficher_main(croupier, y_base=90, cacher_deuxieme=croupier_cache)
+        afficher_main(joueur,   y_base=H-CH-220)
+        lbl_val_joueur.config(text=str(val_main(joueur)))
+        if croupier_cache:
+            lbl_val_croupier.config(text=f"{dk.valeur_carte(croupier[0])} + ?")
+        else:
+            lbl_val_croupier.config(text=str(val_main(croupier)))
+
+    def afficher_resultat(msg, couleur=ACCENT):
+        lbl_resultat.config(text=msg, fg=couleur)
+
+    # ── Fin de partie ─────────────────────────────────────────────
     def fin_croupier():
-        label_score_croupier.config(text=str(val_main(croupier)))
+        rafraichir(croupier_cache=False)
         btn_tirage.config(state="disabled")
         btn_reste.config(state="disabled")
         btn_rejouer.config(state="normal")
+        if calculer_resultat:
+            calculer_resultat()
 
-    rejouer = lambda: (fensolo.destroy(), solo(fenetre))
-
+    # ── Actions joueur ────────────────────────────────────────────
     def tirernv_carte():
         joueur.append(deck_de_jeux.pop())
-        afficher_joueur()
+        rafraichir()
         if val_main(joueur) > 21:
-            label_resultat.config(text="Perdu hahaha!", fg="#e74c3c")
+            afficher_resultat("💥  BUST – Perdu !", RED)
             fin_croupier()
 
     def rester():
         while val_main(croupier) < 17:
             croupier.append(deck_de_jeux.pop())
-        afficher_joueur()
+
         sj, sc = val_main(joueur), val_main(croupier)
-        if sj > 21:
-            label_resultat.config(text="Perdu hahaha!", fg="#e74c3c")
-        elif sc > 21 or sj > sc:
-            label_resultat.config(text="Gagné trop fort!", fg=VERT)
+        if sj > sc or sc > 21:
+            afficher_resultat("🏆  Vous gagnez !", GREEN)
         elif sj < sc:
-            label_resultat.config(text="Perdu hahaha!", fg="#e74c3c")
+            afficher_resultat("😔  Croupier gagne", RED)
         else:
-            label_resultat.config(text="Egalité!", fg="#f9c74f")
+            afficher_resultat("🤝  Égalité", GRAY)
         fin_croupier()
 
-    
-    btn_tirage = tk.Button(fensolo, text="TAKE", width=9, height=2,
-                           font=(FONT, 9), command=tirernv_carte,
-                           bg=VERT, relief=tk.GROOVE)
-    btn_tirage.place(relx=0.9, rely=0.9, anchor="center")
+    rejouer = lambda: (fensolo.destroy(), solo(fenetre))
 
-    btn_reste = tk.Button(fensolo, text="STAY", width=9, height=2,
-                          font=(FONT, 9), command=rester,
-                          bg=VERT, relief=tk.GROOVE)
-    btn_reste.place(relx=0.1, rely=0.9, anchor="center")
+    # ── Barre de boutons ──────────────────────────────────────────
+    bar = tk.Frame(fensolo, bg=BG, height=80)
+    bar.place(x=0, y=H-140, width=W, height=80)
 
-    btn_rejouer = tk.Button(fensolo, text="Rejouer", width=9, height=2,
-                            font=(FONT, 9), command=rejouer,
-                            bg=VERT, relief=tk.GROOVE)
-    btn_rejouer.place(relx=0.5, rely=0.9, anchor="center")
+    def make_btn(parent, text, cmd, **kw):
+        return tk.Button(parent, text=text, command=cmd,
+                         font=(FONT, 12, "bold"),
+                         bg=kw.get("bg", ACCENT),
+                         fg=kw.get("fg", "#0d1f0d"),
+                         activebackground=kw.get("abg", "#d4a820"),
+                         relief=tk.FLAT, cursor="hand2",
+                         padx=18, pady=8)
+
+    btn_quitter = make_btn(bar, "✕  Abandonner", fensolo.destroy,
+                           bg="#2c1010", fg=RED, abg="#3c1818")
+    btn_quitter.pack(side=tk.LEFT, padx=20, pady=16)
+
+    btn_tirage = make_btn(bar, "🃏  TIRER", tirernv_carte)
+    btn_tirage.pack(side=tk.LEFT, padx=10, pady=16)
+
+    btn_reste = make_btn(bar, "✋  RESTER", rester,
+                         bg="#1e4a1e", fg=GREEN, abg="#2e6a2e")
+    btn_reste.pack(side=tk.LEFT, padx=10, pady=16)
+
+    btn_rejouer = make_btn(bar, "↩  Rejouer", rejouer,
+                           bg="#1a3a5a", fg="#82cfff", abg="#2a4a7a")
+    btn_rejouer.pack(side=tk.RIGHT, padx=20, pady=16)
     btn_rejouer.config(state="disabled")
 
-    btn_quitter = tk.Button(fensolo, text="GIVE UP", width=9, height=2,
-                            font=(FONT, 9), command=fensolo.destroy,
-                            bg=VERT, relief=tk.GROOVE)
-    btn_quitter.place(relx=0.05, rely=0.05, anchor="center")
-
+    # ── Zone pari (bas) ───────────────────────────────────────────
     import parier as pa
-    pa.initiation_pari(fensolo, btn_tirage, btn_reste, val_main, joueur, croupier)
+    calculer_resultat = pa.initiation_pari(
+        fensolo, btn_tirage, btn_reste, val_main, joueur, croupier)
 
     btn_tirage.config(state="disabled")
     btn_reste.config(state="disabled")
 
-    afficher_joueur()
+    rafraichir()
 
 
  
