@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import shuffle
 
-def deck():
+def deck() :
     groupe = [" coeur", " pick", " trefle", " carreau"]
     deck_carte = []
     special = ["As", "Valet", "Roi", "Reine"]
