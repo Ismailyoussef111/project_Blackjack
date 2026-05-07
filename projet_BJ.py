@@ -10,7 +10,7 @@ GREEN  = "#2ecc71"
 WHITE  = "#f0ede6"
 FONT   = "Georgia"
 
-fenetre = tk.Tk()
+fenetre = tk.Tk() 
 fenetre.title("Blackjack")
 fenetre.configure(bg=BG)
 fenetre.resizable(True, True)
