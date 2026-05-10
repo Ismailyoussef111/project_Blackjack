@@ -3,7 +3,7 @@ import tkinter as tk
 import solo as so
 import multi as mu
 
-
+ 
 BG     = "#0d1f0d"
 ACCENT = "#f0c040"
 GREEN  = "#2ecc71"
