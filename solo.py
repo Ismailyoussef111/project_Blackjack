@@ -146,7 +146,7 @@ def solo(fenetre):
     bar = tk.Frame(fensolo, bg=BG, height=80)
     bar.place(x=0, y=H-140, width=W, height=80)
 
-    def make_btn(parent, text, cmd, **kw):
+    def faire_btn(parent, text, cmd, **kw):
         return tk.Button(parent, text=text, command=cmd,
                          font=(FONT, 12, "bold"),
                          bg=kw.get("bg", ACCENT),
@@ -155,18 +155,18 @@ def solo(fenetre):
                          relief=tk.FLAT, cursor="hand2",
                          padx=18, pady=8)
 
-    btn_quitter = make_btn(bar, "✕  Abandonner", fensolo.destroy,
+    btn_quitter = faire_btn(bar, "✕  Abandonner", fensolo.destroy,
                            bg="#2c1010", fg=RED, abg="#3c1818")
     btn_quitter.pack(side=tk.LEFT, padx=20, pady=16)
 
-    btn_tirage = make_btn(bar, "🃏  TIRER", tirernv_carte)
+    btn_tirage = faire_btn(bar, "🃏  TIRER", tirernv_carte)
     btn_tirage.pack(side=tk.LEFT, padx=10, pady=16)
 
-    btn_reste = make_btn(bar, "✋  RESTER", rester,
+    btn_reste = faire_btn(bar, "✋  RESTER", rester,
                          bg="#1e4a1e", fg=GREEN, abg="#2e6a2e")
     btn_reste.pack(side=tk.LEFT, padx=10, pady=16)
 
-    btn_rejouer = make_btn(bar, "↩  Rejouer", rejouer,
+    btn_rejouer = faire_btn(bar, "↩  Rejouer", rejouer,
                            bg="#1a3a5a", fg="#82cfff", abg="#2a4a7a")
     btn_rejouer.pack(side=tk.RIGHT, padx=20, pady=16)
     btn_rejouer.config(state="disabled")
