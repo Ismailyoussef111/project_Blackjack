@@ -10,7 +10,7 @@ RED      = "#e74c3c"
 WHITE    = "#f0ede6"
 GRAY     = "#7f8c8d"
 FONT     = "Georgia"
-
+ 
 
 
 
