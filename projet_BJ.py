@@ -51,7 +51,7 @@ sep = tk.Frame(fenetre, bg=ACCENT, height=2, width=340)
 sep.place(relx=0.5, rely=0.39, anchor="center")
 
 
-def make_menu_btn(text, cmd, row):
+def faire_menu_btn(text, cmd, row):
     btn = tk.Button(fenetre, text=text,
                     font=(FONT, 17, "bold"),
                     bg="#163516", fg=ACCENT,
@@ -158,9 +158,9 @@ def jeux():
 
 
 
-make_menu_btn("🃏   Jouer",    jeux,       0.50)
-make_menu_btn("📊   Scores",   score_,     0.62)
-make_menu_btn("📖   Règles",   regle_jeux, 0.74)
+faire_menu_btn("🃏   Jouer",    jeux,       0.50)
+faire_menu_btn("📊   Scores",   score_,     0.62)
+faire_menu_btn("📖   Règles",   regle_jeux, 0.74)
 
 
 tk.Label(fenetre, text="♣  Bonne chance  ♣",
