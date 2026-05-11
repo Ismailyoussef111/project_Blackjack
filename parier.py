@@ -98,4 +98,3 @@ def initiation_pari(fensolo, btn_tirage, btn_reste, val_main, joueur, croupier):
         label_argent.config(text=f"💰  {argent_joueur} €")
 
     return calculer_resultat
-
